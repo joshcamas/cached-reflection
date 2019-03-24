@@ -11,12 +11,39 @@ namespace Ardenfall.Reflection
         private Dictionary<string, MethodInfo> methods;
         private Dictionary<string, PropertyInfo> properties;
 
+        private FieldInfo[] allFields;
+        private MethodInfo[] allMethods;
+        private PropertyInfo[] allProperties;
+
         public CachedReflectionType(Type type)
         {
             this.type = type;
             fields = new Dictionary<string, FieldInfo>();
             methods = new Dictionary<string, MethodInfo>();
             properties = new Dictionary<string, PropertyInfo>();
+
+            allFields = null;
+        }
+
+        public FieldInfo[] GetFields()
+        {
+            if (allFields == null)
+                allFields = type.GetFields();
+            return allFields;
+        }
+
+        public MethodInfo[] GetMethods()
+        {
+            if (allMethods == null)
+                allMethods = type.GetMethods();
+            return allMethods;
+        }
+
+        public PropertyInfo[] GetProperties()
+        {
+            if (allProperties == null)
+                allProperties = type.GetProperties();
+            return allProperties;
         }
 
         public FieldInfo GetField(string field)
